@@ -2,7 +2,7 @@
     <main>
         <Nav />
         <h1>Write report</h1>
-        <form>
+        <form class="form">
             <p>
                 Write reports in the following pattern:
             </p>
