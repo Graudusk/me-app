@@ -6,6 +6,7 @@ import Login from '@/components/Login'
 import Logout from '@/components/Logout'
 import Write from '@/components/Write'
 import Me from '@/components/Me'
+import Chat from '@/components/Chat'
 
 Vue.use(Router)
 
@@ -39,6 +40,14 @@ export default new Router({
       // this generates a separate chunk (login.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: Logout
+    },
+    {
+      path: '/chat',
+      name: 'chat',
+      // route level code-splitting
+      // this generates a separate chunk (login.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: Chat
     },
     {
       path: '/about',

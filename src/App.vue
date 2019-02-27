@@ -58,15 +58,28 @@ p {
     font-size: 1.2em;
     font-weight: normal;
 }
-.form .form-control {
+.form .form-control, .control, .form button {
     padding: 6px 12px;
     border: 2px solid #333;
     border-radius: 5px;
 }
 
-.form button {
-    padding: 6px 12px;
-    border: 2px solid #333;
-    border-radius: 5px;
+.block {
+    width: 100%;
+    display: block;
+}
+
+.float-right {
+    float: right;
+}
+.float-left {
+    float: left;
+}
+
+.align-right {
+    text-align: right;
+}
+.align-left {
+    text-align: left;
 }
 </style>

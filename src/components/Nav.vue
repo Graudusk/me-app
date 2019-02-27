@@ -5,6 +5,9 @@
                 <router-link to="/">Me</router-link>
             </li>
             <li>
+                <router-link to="/chat">Chat</router-link>
+            </li>
+            <li>
                 <router-link to="/report/kmom01">kmom01</router-link>
             </li>
             <li>
@@ -23,7 +26,7 @@
                 <router-link to="/login">Login</router-link>
             </li>
             <li v-else="">
-                Logged in as {{ this.user.email }}
+                <!-- Logged in as {{ this.user.email }} -->
                 <router-link to="/logout">Logout</router-link>
             </li>
         </ul>
