@@ -2,8 +2,6 @@
     <main>
         <Nav />
         <h1>Chat</h1>
-        <p v-model="time">{{ time }}</p>
-        <div v-model="refresher" />
         <div v-if="!nicknameSet">
             <form class="form" @submit.prevent="setNickname">
                 <div class="row">
@@ -61,11 +59,11 @@
         <div v-else-if="!loading && !sessionStarted">
             <h3 class="text-center">Welcome {{ nickname }}!</h3>
             <br />
-            <p class="text-center">
+            <!-- <p class="text-center">
                 To start chatting with friends click on the button below, it'll start a new chat session
                 and then you can invite your friends over to chat!
             </p>
-            <br />
+            <br /> -->
             <button @click="connectToWebSocket" class="control">Start Chatting</button>
         </div>
         <div v-else>
@@ -95,8 +93,8 @@ export default {
             nicknameSet: false,
             // notification: new Audio('../../static/plucky.ogg'),
             sessionStarted: false,
-            refresher: 0,
-            time: ''
+            // refresher: 0,
+            // time: ''
         }
     },
     created() {
@@ -117,13 +115,13 @@ export default {
         // setInterval(this.refreshToken, 240000)
         // let refresher = this.refresher;
     },
-    refresh() {
-        let now = new Date().toLocaleTimeString();
-        this.refresher += 1;
-        this.time = now;
-        console.log(now)
+    // refresh() {
+    //     let now = new Date().toLocaleTimeString();
+    //     this.refresher += 1;
+    //     this.time = now;
+    //     console.log(now)
 
-    },
+    // },
     updated() {
         // Scroll to bottom of Chat window
         const chatBody = this.$refs.chatBody
@@ -172,14 +170,17 @@ export default {
             output.scrollTop = output.scrollHeight;
         },
         connectToWebSocket() {
+            // ws://dbwebb.se:1337/echo
             // this.websocket = new WebSocket();
-            this.websocket = new WebSocket('ws://localhost:1337/', 'json');
+            // this.websocket = new WebSocket('wss://dbwebb.se:1337/echo', 'json');
+            // this.websocket = new WebSocket('wss://localhost:1662/', 'json');
+            this.websocket = new WebSocket('wss://ws.graudusk.me', 'json');
             this.websocket.onopen = this.onOpen;
             this.websocket.onclose = this.onClose;
             this.websocket.onmessage = this.onMessage;
             this.websocket.onerror = this.onError;
             this.sessionStarted = true;
-            setInterval(this.refresh, 1000);
+            // setInterval(this.refresh, 1000);
         },
         calculateTime(time) {
             let now = new Date().getTime()/1000;
@@ -226,7 +227,7 @@ export default {
             }
         },
         onError(event) {
-            alert('An error occured:', event.data)
+            console.log('An error occured:', event)
         }
     }
 };
