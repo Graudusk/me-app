@@ -153,6 +153,23 @@ export default {
                         }
                     };
                     this.websocket.send(JSON.stringify(data));
+                    fetch("https://me-api.graudusk.me/chat", {
+                            headers: {
+                                'Content-Type': 'application/json'
+                                // 'x-access-token': localStorage.getItem('token')
+                            },
+                            method: 'POST',
+                            // body: formData
+                            // body: myEscapedJSONString
+                            body: JSON.stringify(data)
+                        })
+                        .then(function(response) {
+                            return response.json();
+                        })
+                        .then(function(result) {
+                            console.log(result);
+                        })
+                        .catch(err => console.log(err));
 
                     this.messages.push(data);
                     console.log("Sending message: " + this.message);
@@ -210,8 +227,19 @@ export default {
             return ret;
         },
         onOpen(event) {
+            let that = this;
             console.log("The websocket is now open.");
             console.log(this.websocket);
+            fetch("https://me-api.graudusk.me/chat")
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(result) {
+                    console.log(result);
+                    // this.messages.push(data);
+                    that.messages = result;
+                })
+                .catch(err => console.log(err));
         },
         onClose(event) {
             console.log('Connection closed.');
@@ -264,13 +292,9 @@ export default {
 .card-body {
     background-color: #078969;
     box-shadow: #3336 1px 1px 3px inset;
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
 }
 
 .chat-body {
-    margin-top: -15px;
-    margin-bottom: -5px;
     height: 380px;
     overflow-y: auto;
 }
@@ -293,6 +317,10 @@ export default {
 
 .chat-section:first-child {
     margin-top: 10px;
+}
+
+.chat-section:last-child {
+    margin-bottom: 15px;
 }
 
 .chat-section {
