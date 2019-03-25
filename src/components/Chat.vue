@@ -25,14 +25,8 @@
                                     Sent {{ calculateTime(message.timestamp) }}from {{ message.user.nickname }}
                                 </span>
                             </div>
-                            <!-- <div class="">
-                                <img class="rounded-circle" :src="`http://placehold.it/40/007bff/fff&text=${message.user.nickname[0].toUpperCase()}`" />
-                            </div> -->
                         </template>
                         <template v-else>
-                            <!-- <div class="">
-                                <img class="rounded-circle" :src="`http://placehold.it/40/333333/fff&text=${message.user.nickname[0].toUpperCase()}`" />
-                            </div> -->
                             <div class="align-right">
                                 <span class="card-text align-left speech-bubble speech-bubble-peer">
                                     {{ message.message }}<br><br>
@@ -59,16 +53,10 @@
         <div v-else-if="!loading && !sessionStarted">
             <h3 class="text-center">Welcome {{ nickname }}!</h3>
             <br />
-            <!-- <p class="text-center">
-                To start chatting with friends click on the button below, it'll start a new chat session
-                and then you can invite your friends over to chat!
-            </p>
-            <br /> -->
             <button @click="connectToWebSocket" class="control">Start Chatting</button>
         </div>
         <div v-else>
             <div class="loading">
-                <!-- <img src="../assets/disqus.svg" /> -->
                 <h4>Loading...</h4>
             </div>
         </div>
@@ -78,7 +66,6 @@
     </main>
 </template>
 <script>
-// const $ = window.jQuery
 import Nav from './Nav.vue';
 export default {
     components: {
@@ -91,39 +78,18 @@ export default {
             message: '',
             nickname: '',
             nicknameSet: false,
-            // notification: new Audio('../../static/plucky.ogg'),
             sessionStarted: false,
-            // refresher: 0,
-            // time: ''
         }
     },
     created() {
         this.nickname = localStorage.getItem('nickname')
-        console.log(this.nickname);
-        // Setup headers for all requests
-        // $.ajaxSetup({
-        //     headers: {
-        //         'Authorization': `JWT ${localStorage.getItem('token')}`
-        //     }
-        // })
         if (this.$route.params.uri) {
             this.joinChatSession()
             this.connectToWebSocket()
         }
         setTimeout(() => { this.loading = false }, 2000)
-        // Refresh the JWT every 240 Seconds (4 minutes)
-        // setInterval(this.refreshToken, 240000)
-        // let refresher = this.refresher;
     },
-    // refresh() {
-    //     let now = new Date().toLocaleTimeString();
-    //     this.refresher += 1;
-    //     this.time = now;
-    //     console.log(now)
-
-    // },
     updated() {
-        // Scroll to bottom of Chat window
         const chatBody = this.$refs.chatBody
         if (chatBody) {
             chatBody.scrollTop = chatBody.scrollHeight
@@ -141,9 +107,7 @@ export default {
                 console.log("The websocket is not connected to a server.");
             } else {
                 if (this.message) {
-                    // let now = new Date();
                     let now = new Date().getTime()/1000;
-                    // let timestamp = now.to();
                     console.log(this.nickname)
                     let data = {
                         timestamp: Math.round(now),
@@ -156,11 +120,8 @@ export default {
                     fetch("https://me-api.graudusk.me/chat", {
                             headers: {
                                 'Content-Type': 'application/json'
-                                // 'x-access-token': localStorage.getItem('token')
                             },
                             method: 'POST',
-                            // body: formData
-                            // body: myEscapedJSONString
                             body: JSON.stringify(data)
                         })
                         .then(function(response) {
@@ -175,29 +136,15 @@ export default {
                     console.log("Sending message: " + this.message);
                     this.message = '';
                 }
-                // outputLog("You said: " + this.message);
             }
         },
-        outputLog(message) {
-            let now = new Date().getTime()/1000;
-            // let now = new Date();
-            // let timestamp = now.toLocaleTimeString();
-
-            output.innerHTML += `${timestamp} ${message}<br>`;
-            output.scrollTop = output.scrollHeight;
-        },
         connectToWebSocket() {
-            // ws://dbwebb.se:1337/echo
-            // this.websocket = new WebSocket();
-            // this.websocket = new WebSocket('wss://dbwebb.se:1337/echo', 'json');
-            // this.websocket = new WebSocket('wss://localhost:1662/', 'json');
             this.websocket = new WebSocket('wss://ws.graudusk.me', 'json');
             this.websocket.onopen = this.onOpen;
             this.websocket.onclose = this.onClose;
             this.websocket.onmessage = this.onMessage;
             this.websocket.onerror = this.onError;
             this.sessionStarted = true;
-            // setInterval(this.refresh, 1000);
         },
         calculateTime(time) {
             let now = new Date().getTime()/1000;

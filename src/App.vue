@@ -16,8 +16,6 @@ export default {
         }
     },
     mounted() {
-        // this.getMe();
-        // console.log(localStorage.getItem('token'));
         this.user.token = localStorage.getItem('token');
         this.user.email = localStorage.getItem('email');
     },

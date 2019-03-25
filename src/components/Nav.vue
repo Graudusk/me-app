@@ -22,6 +22,9 @@
             <li>
                 <router-link to="/report/kmom05">kmom05</router-link>
             </li>
+            <li>
+                <router-link to="/report/kmom06">kmom06</router-link>
+            </li>
             <li v-if="this.user.token">
                 <router-link to="/write">Write</router-link>
             </li>
