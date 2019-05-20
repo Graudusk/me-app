@@ -7,6 +7,18 @@
             <li>
                 <router-link to="/chat">Chat</router-link>
             </li>
+            <li v-if="this.user.token">
+                <router-link to="/write">Write</router-link>
+            </li>
+            <li v-if="this.user.token == undefined">
+                <router-link to="/login">Login</router-link>
+            </li>
+            <li v-else="">
+                <!-- Logged in as {{ this.user.email }} -->
+                <router-link to="/logout">Logout</router-link>
+            </li>
+        </ul>
+        <ul>
             <li>
                 <router-link to="/report/kmom01">kmom01</router-link>
             </li>
@@ -25,15 +37,8 @@
             <li>
                 <router-link to="/report/kmom06">kmom06</router-link>
             </li>
-            <li v-if="this.user.token">
-                <router-link to="/write">Write</router-link>
-            </li>
-            <li v-if="this.user.token == undefined">
-                <router-link to="/login">Login</router-link>
-            </li>
-            <li v-else="">
-                <!-- Logged in as {{ this.user.email }} -->
-                <router-link to="/logout">Logout</router-link>
+            <li>
+                <router-link to="/report/kmom10">kmom10</router-link>
             </li>
         </ul>
     </nav>
